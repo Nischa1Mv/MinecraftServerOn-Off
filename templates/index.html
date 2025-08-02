@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Droplet Control Panel</title>
+    <style>
+        button[disabled] {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+    <style>
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #333;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+</head>
+
+<body style="text-align: center; margin-top: 50px;">
+    <h1>🚀 Minecraft Server Control</h1>
+    <p>Status: <strong>{{ status }}</strong></p>
+    {% if status in ['starting', 'stopping'] %}
+    <div class="spinner"></div>
+    {% endif %}
+
+
+    <form method="POST">
+        <button name="action" value="power_on" style="padding: 10px; margin: 10px;" {% if status in
+            ['active', 'starting' ] %}disabled{% endif %}>{% if status == 'starting' %}Starting...{% else %}Start
+            Server{% endif %}</button>
+
+        <button name="action" value="power_off" style="padding: 10px; margin: 10px;" {% if status in ['off', 'stopping'
+            ] %}disabled{% endif %}>{% if status == 'stopping' %}Stopping...{% else %}Stop Server{% endif %}</button>
+    </form>
+</body>
+
+</html>
